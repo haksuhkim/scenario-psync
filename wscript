@@ -68,11 +68,20 @@ def configure(conf):
 def build (bld):
     deps =  ' '.join (['ns3_'+dep for dep in MANDATORY_NS3_MODULES + OTHER_NS3_MODULES]).upper ()
 
+    PSync = bld.objects (
+        target = "PSync",
+        features = ["cxx"],
+        source = bld.path.ant_glob("PSync/**/*.cpp"),
+        includes = ["PSync", '.'],
+        export_includes = ["PSync", '.'],
+        use = deps
+        )
+
     common = bld.objects (
         target = "extensions",
         features = ["cxx"],
         source = bld.path.ant_glob(['extensions/**/*.cc', 'extensions/**/*.cpp']),
-        use = deps,
+        use = deps + " PSync",
         )
 
     for scenario in bld.path.ant_glob (['scenarios/*.cc']):
@@ -91,7 +100,7 @@ def build (bld):
             target = name,
             features = ['cxx'],
             source = [scenario],
-            use = deps + " extensions",
+            use = deps + " extensions PSync",
             includes = "extensions"
             )
 

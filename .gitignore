@@ -4,3 +4,12 @@
 .lock*
 build/
 *.pyc
+tags
+*.log
+result*.txt
+Makefile
+.cproject
+.project
+.pydevproject
+.settings
+.svn
