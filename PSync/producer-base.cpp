@@ -19,7 +19,9 @@
 
 #include "PSync/producer-base.hpp"
 
-#include <ndn-cxx/util/logger.hpp>
+//#include <ndn-cxx/util/logger.hpp>
+#include "ns3/ndnSIM/ndn-cxx/util/logger.hpp"
+
 #include <boost/algorithm/string.hpp>
 
 #include <cstring>
@@ -28,7 +30,8 @@
 
 namespace psync {
 
-NDN_LOG_INIT(psync.ProducerBase);
+//NDN_LOG_INIT(psync.ProducerBase);
+NS_LOG_COMPONENT_DEFINE("psync.ProducerBase");
 
 ProducerBase::ProducerBase(size_t expectedNumEntries,
                            ndn::Face& face,

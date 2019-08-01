@@ -20,14 +20,17 @@
 #include "PSync/consumer.hpp"
 #include "PSync/detail/state.hpp"
 
-#include <ndn-cxx/util/logger.hpp>
+//#include <ndn-cxx/util/logger.hpp>
+#include "ns3/ndnSIM/ndn-cxx/util/logger.hpp"
+
 #include <ndn-cxx/security/validator-null.hpp>
 
 #include <boost/algorithm/string.hpp>
 
 namespace psync {
 
-NDN_LOG_INIT(psync.Consumer);
+//NDN_LOG_INIT(psync.Consumer);
+NS_LOG_COMPONENT_DEFINE("psync.Consumer");
 
 Consumer::Consumer(const ndn::Name& syncPrefix,
                    ndn::Face& face,
@@ -160,6 +163,8 @@ void
 Consumer::sendSyncInterest()
 {
   BOOST_ASSERT(!m_iblt.empty());
+
+  NDN_LOG_DEBUG("sendSyncInterest, prefix: " << m_syncInterestPrefix);
 
   ndn::Name syncInterestName(m_syncInterestPrefix);
 

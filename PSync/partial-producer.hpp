@@ -71,6 +71,8 @@ public:
                   ndn::time::milliseconds helloReplyFreshness = HELLO_REPLY_FRESHNESS,
                   ndn::time::milliseconds syncReplyFreshness = SYNC_REPLY_FRESHNESS);
 
+  virtual
+  ~PartialProducer();
   /**
    * @brief Publish name to let subscribed consumers know
    *

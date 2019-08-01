@@ -19,7 +19,9 @@
 
 #include "PSync/full-producer.hpp"
 
-#include <ndn-cxx/util/logger.hpp>
+//#include <ndn-cxx/util/logger.hpp>
+#include "ns3/ndnSIM/ndn-cxx/util/logger.hpp"
+
 #include <ndn-cxx/util/segment-fetcher.hpp>
 #include <ndn-cxx/security/validator-null.hpp>
 
@@ -29,7 +31,8 @@
 
 namespace psync {
 
-NDN_LOG_INIT(psync.FullProducer);
+//NDN_LOG_INIT(psync.FullProducer);
+NS_LOG_COMPONENT_DEFINE("psync.FullProducer");
 
 FullProducer::FullProducer(const size_t expectedNumEntries,
                            ndn::Face& face,

@@ -20,14 +20,16 @@
 #include "PSync/partial-producer.hpp"
 #include "PSync/detail/state.hpp"
 
-#include <ndn-cxx/util/logger.hpp>
+//#include <ndn-cxx/util/logger.hpp>
+#include "ns3/ndnSIM/ndn-cxx/util/logger.hpp"
 
 #include <cstring>
 #include <limits>
 
 namespace psync {
 
-NDN_LOG_INIT(psync.PartialProducer);
+//NDN_LOG_INIT(psync.PartialProducer);
+NS_LOG_COMPONENT_DEFINE("psync.PartialProducer");
 
 PartialProducer::PartialProducer(size_t expectedNumEntries,
                                  ndn::Face& face,
@@ -46,6 +48,10 @@ PartialProducer::PartialProducer(size_t expectedNumEntries,
                                std::bind(&PartialProducer::onSyncInterest, this, _1, _2));
     },
     std::bind(&PartialProducer::onRegisterFailed, this, _1, _2));
+}
+
+PartialProducer::~PartialProducer() {
+
 }
 
 void
