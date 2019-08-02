@@ -6,6 +6,7 @@ build/
 *.pyc
 tags
 *.log
+*.swp
 result*.txt
 Makefile
 .cproject
