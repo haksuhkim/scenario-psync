@@ -13,12 +13,12 @@ PSync Simulation
 
     Execution : Partial PSync
     
-    NS_LOG=PSyncConsumerApp:psync.Consumer:PSyncProducerApp:psync.PartialProducer build/psync-simple --sm=100 --ds=200 --duration=100 --p_start=1 --c_start=2
+    NS_LOG=PSyncConsumerApp:psync.Consumer:PSyncProducerApp:psync.PartialProducer build/psync-rocketfuel --consumer="1,11,21,31,41" --producer="91" --sm=100 --ds=200 --duration=100 --p_start=1 --c_start=2
 
 
     Execution : Full PSync
 
-    NS_LOG=PSyncConsumerApp:psync.Consumer:PSyncProducerApp:psync.PartialProducer build/psync-rocketfuel --consumer="1,11,21,31,41" --producer="91" --sm=100 --ds=200 --duration=100 --p_start=1 --c_start=2
+    NS_LOG=FSyncProducerApp:psync.FullProducer build/fsync-rocketfuel --producer="1,3,5,7,9" --pm=50 --ds=50 --duration=100 --p_start=1 --c_start=2
 
 
 Prerequisites
