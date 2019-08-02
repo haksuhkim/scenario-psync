@@ -37,20 +37,21 @@ NS_OBJECT_ENSURE_REGISTERED(PSyncProducerApp);
 ns3::TypeId
 PSyncProducerApp::GetTypeId() {
   static ns3::TypeId tid = ns3::TypeId("PSyncProducerApp")
-							.SetGroupName("Ndn")
-							.SetParent<Application>()
-							.AddConstructor<PSyncProducerApp>()
-							.AddAttribute("Prefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
-											MakeNameAccessor(&PSyncProducerApp::m_syncPrefix), MakeNameChecker())
-							.AddAttribute("UserPrefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
-											MakeStringAccessor(&PSyncProducerApp::m_userPrefix), ns3::MakeStringChecker())
+			.SetGroupName("Ndn")
+			.SetParent<Application>()
+			.AddConstructor<PSyncProducerApp>()
+			.AddAttribute("Prefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
+						   MakeNameAccessor(&PSyncProducerApp::m_syncPrefix), MakeNameChecker())
 
-							.AddAttribute("MaxPublishMessage", "Number of publish messages", ns3::UintegerValue(100),
-											ns3::MakeUintegerAccessor(&PSyncProducerApp::m_maxNumPublish), ns3::MakeUintegerChecker<uint64_t>())
+			.AddAttribute("UserPrefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
+						   MakeStringAccessor(&PSyncProducerApp::m_userPrefix), ns3::MakeStringChecker())
 
-							.AddAttribute("TotalDataStream", "Number of Data Stream", ns3::UintegerValue(200),
-											ns3::MakeUintegerAccessor(&PSyncProducerApp::m_nTotalDS), ns3::MakeUintegerChecker<uint32_t>())
-							;
+			.AddAttribute("MaxPublishMessage", "Number of publish messages", ns3::UintegerValue(100),
+						   ns3::MakeUintegerAccessor(&PSyncProducerApp::m_maxNumPublish), ns3::MakeUintegerChecker<uint64_t>())
+
+			.AddAttribute("TotalDataStream", "Number of Data Stream", ns3::UintegerValue(200),
+						   ns3::MakeUintegerAccessor(&PSyncProducerApp::m_nTotalDS), ns3::MakeUintegerChecker<uint32_t>())
+					;
 
   return tid;
 }

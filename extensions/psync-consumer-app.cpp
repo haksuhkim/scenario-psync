@@ -42,15 +42,15 @@ NS_OBJECT_ENSURE_REGISTERED(PSyncConsumerApp);
 ns3::TypeId
 PSyncConsumerApp::GetTypeId() {
   static ns3::TypeId tid = ns3::TypeId("PSyncConsumerApp")
-						.SetGroupName("Ndn")
-						.SetParent<Application>()
-						.AddConstructor<PSyncConsumerApp>()
-						  .AddAttribute("Prefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
-										MakeNameAccessor(&PSyncConsumerApp::m_syncPrefix), MakeNameChecker())
+			.SetGroupName("Ndn")
+			.SetParent<Application>()
+    		.AddConstructor<PSyncConsumerApp>()
+            .AddAttribute("Prefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
+						  MakeNameAccessor(&PSyncConsumerApp::m_syncPrefix), MakeNameChecker())
 
-						  .AddAttribute("NumSubscribeMessage", "Number of subscribe messages", ns3::UintegerValue(100),
-											ns3::MakeUintegerAccessor(&PSyncConsumerApp::m_nSub), ns3::MakeUintegerChecker<uint32_t>())
-							;
+		    .AddAttribute("NumSubscribeMessage", "Number of subscribe messages", ns3::UintegerValue(100),
+						  ns3::MakeUintegerAccessor(&PSyncConsumerApp::m_nSub), ns3::MakeUintegerChecker<uint32_t>())
+					;
 
   return tid;
 }

@@ -46,21 +46,21 @@ NS_OBJECT_ENSURE_REGISTERED(FSyncProducerApp);
 ns3::TypeId
 FSyncProducerApp::GetTypeId() {
 	static ns3::TypeId tid = ns3::TypeId("FSyncProducerApp")
-						.SetGroupName("Ndn")
-						.SetParent<ns3::Application>()
-						.AddConstructor<FSyncProducerApp>()
-						.AddAttribute("Prefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
-										MakeNameAccessor(&FSyncProducerApp::m_syncPrefix), MakeNameChecker())
+			.SetGroupName("Ndn")
+			.SetParent<ns3::Application>()
+			.AddConstructor<FSyncProducerApp>()
+			.AddAttribute("Prefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
+						  MakeNameAccessor(&FSyncProducerApp::m_syncPrefix), MakeNameChecker())
 
-						.AddAttribute("UserPrefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
-										ns3::MakeStringAccessor(&FSyncProducerApp::m_userPrefix), ns3::MakeStringChecker())
+			.AddAttribute("UserPrefix", "Prefix, for which producer has the data", ns3::StringValue("/"),
+						  ns3::MakeStringAccessor(&FSyncProducerApp::m_userPrefix), ns3::MakeStringChecker())
 
-						.AddAttribute("MaxPublishMessage", "Number of publish messages", ns3::UintegerValue(100),
-										ns3::MakeUintegerAccessor(&FSyncProducerApp::m_maxNumPublish), ns3::MakeUintegerChecker<uint64_t>())
+			.AddAttribute("MaxPublishMessage", "Number of publish messages", ns3::UintegerValue(100),
+						  ns3::MakeUintegerAccessor(&FSyncProducerApp::m_maxNumPublish), ns3::MakeUintegerChecker<uint64_t>())
 
-						.AddAttribute("TotalDataStream", "Number of Data Stream", ns3::UintegerValue(200),
-										ns3::MakeUintegerAccessor(&FSyncProducerApp::m_nTotalDS), ns3::MakeUintegerChecker<uint32_t>())
-						;
+			.AddAttribute("TotalDataStream", "Number of Data Stream", ns3::UintegerValue(200),
+						  ns3::MakeUintegerAccessor(&FSyncProducerApp::m_nTotalDS), ns3::MakeUintegerChecker<uint32_t>())
+						  ;
 
 	return tid;
 }
