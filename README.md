@@ -1,3 +1,26 @@
+ndnSIM
+======
+
+PSync Simulation
+===============
+    We use following source codes.
+        ndnSIM : ver 2.7
+        ns-3 : ver 3.29
+        NFD : 0.6.5
+        ndn-cxx : 0.6.5
+		PSync : commit 1526fee9d39076763d73ffa908929b9592bbba05
+			    (because of ndn::Scheduler API changes) 
+
+    Execution : Partial PSync
+    
+    NS_LOG=PSyncConsumerApp:psync.Consumer:PSyncProducerApp:psync.PartialProducer build/psync-simple --sm=100 --ds=200 --duration=100 --p_start=1 --c_start=2
+
+
+    Execution : Full PSync
+
+    NS_LOG=PSyncConsumerApp:psync.Consumer:PSyncProducerApp:psync.PartialProducer build/psync-rocketfuel --consumer="1,11,21,31,41" --producer="91" --sm=100 --ds=200 --duration=100 --p_start=1 --c_start=2
+
+
 Prerequisites
 =============
 
