@@ -58,16 +58,16 @@ PSyncConsumerApp::GetTypeId() {
 void
 PSyncConsumerApp::DoInitialize()
 {
-NS_LOG_FUNCTION_NOARGS();
+    NS_LOG_FUNCTION_NOARGS();
 
-// find out what is application id on the node
-for (uint32_t id = 0; id < GetNode()->GetNApplications(); ++id) {
-  if (GetNode()->GetApplication(id) == this) {
-	m_appId = id;
-  }
-}
+    // find out what is application id on the node
+    for (uint32_t id = 0; id < GetNode()->GetNApplications(); ++id) {
+        if (GetNode()->GetApplication(id) == this) {
+	        m_appId = id;
+        }
+    }
 
-Application::DoInitialize();
+    Application::DoInitialize();
 }
 
 void PSyncConsumerApp::DoDispose(void)
@@ -78,12 +78,12 @@ void PSyncConsumerApp::DoDispose(void)
 // Unfortunately, this causes SEGFAULT
 // The best reason I see is that apps are freed after ndn stack is removed
 // StopApplication ();
-Application::DoDispose();
+    Application::DoDispose();
 }
 
 uint32_t PSyncConsumerApp::GetId() const
 {
-return m_appId;
+    return m_appId;
 }
 
   /**
@@ -125,37 +125,37 @@ PSyncConsumerApp::StopApplication() {
 void
 PSyncConsumerApp::run()
 {
-m_face.processEvents();
+    m_face.processEvents();
 }
 
 void
 PSyncConsumerApp::afterReceiveHelloData(const std::vector<::ndn::Name>& availSubs)
 {
-// Randomly subscribe to m_nSub prefixes
-std::vector<::ndn::Name> sensors = availSubs;
+    // Randomly subscribe to m_nSub prefixes
+    std::vector<::ndn::Name> sensors = availSubs;
 
-std::shuffle(sensors.begin(), sensors.end(), m_rng);
+    std::shuffle(sensors.begin(), sensors.end(), m_rng);
 
-for (uint32_t i = 0; i < m_nSub; i++) {
-  NDN_LOG_INFO("Subscribing to: " << sensors[i]);
-  m_instance->addSubscription(sensors[i]);
-}
+    for (uint32_t i = 0; i < m_nSub; i++) {
+        NDN_LOG_INFO("Subscribing to: " << sensors[i]);
+        m_instance->addSubscription(sensors[i]);
+    }
 
-// After setting the subscription list, send the sync interest
-// The sync interest contains the subscription list
-// When new data is received for any subscribed prefix, processSyncUpdate is called
-m_instance->sendSyncInterest();
+    // After setting the subscription list, send the sync interest
+    // The sync interest contains the subscription list
+    // When new data is received for any subscribed prefix, processSyncUpdate is called
+    m_instance->sendSyncInterest();
 }
 
 void
 PSyncConsumerApp::processSyncUpdate(const std::vector<psync::MissingDataInfo>& updates)
 {
-for (const auto& update : updates) {
-  for (uint64_t i = update.lowSeq; i <= update.highSeq; i++) {
-	// Data can now be fetched using the prefix and sequence
-	NDN_LOG_INFO("Update: " << update.prefix << "/" << i);
-  }
-}
+    for (const auto& update : updates) {
+        for (uint64_t i = update.lowSeq; i <= update.highSeq; i++) {
+            // Data can now be fetched using the prefix and sequence
+            NDN_LOG_INFO("PUpdate: " << update.prefix << "/" << i);
+        }
+    }
 }
 
 #if 0

@@ -61,7 +61,7 @@ PSyncProducerApp::DoInitialize()
 {
 	NS_LOG_FUNCTION_NOARGS();
 
-// find out what is application id on the node
+    // find out what is application id on the node
 	for (uint32_t id = 0; id < GetNode()->GetNApplications(); ++id) {
 		if (GetNode()->GetApplication(id) == this) {
 			m_appId = id;
@@ -76,15 +76,15 @@ void PSyncProducerApp::DoDispose(void)
 //NS_LOG_FUNCTION_NOARGS();
 	NDN_LOG_DEBUG("");
 
-// Unfortunately, this causes SEGFAULT
-// The best reason I see is that apps are freed after ndn stack is removed
-// StopApplication ();
-Application::DoDispose();
+    // Unfortunately, this causes SEGFAULT
+    // The best reason I see is that apps are freed after ndn stack is removed
+    // StopApplication ();
+    Application::DoDispose();
 }
 
 uint32_t PSyncProducerApp::GetId() const
 {
-return m_appId;
+    return m_appId;
 }
 
   /**
@@ -105,7 +105,7 @@ PSyncProducerApp::PSyncProducerApp()
 void
 PSyncProducerApp::StartApplication() {
 
-//  m_instance.reset(new psync::PartialProducer(40, m_face, m_syncPrefix, m_userPrefix + "-0"));
+  //  m_instance.reset(new psync::PartialProducer(40, m_face, m_syncPrefix, m_userPrefix + "-0"));
   m_instance.reset(new psync::PartialProducer(m_nTotalDS, m_face, m_syncPrefix, m_userPrefix + "-0"));
 
   // Add user prefixes and schedule updates for them
@@ -148,7 +148,7 @@ PSyncProducerApp::doUpdate(const ndn::Name& updateName)
   m_instance->publishName(updateName);
 
   uint64_t seqNo =  m_instance->getSeqNo(updateName).value();
-  NDN_LOG_INFO("Publish: " << updateName << "/" << seqNo);
+  NDN_LOG_INFO("PPublish: " << updateName << "/" << seqNo);
 
   if (seqNo < m_maxNumPublish) {
     // Schedule the next update for this user prefix b/w 0 and 60 seconds

@@ -150,7 +150,7 @@ FSyncProducerApp::doUpdate(const Name& prefix) {
 	m_instance->publishName(prefix);
 
 	uint64_t seqNo = m_instance->getSeqNo(prefix).value();
-	NDN_LOG_INFO("Publish: " << prefix << "/" << seqNo);
+	NDN_LOG_INFO("PPublish: " << prefix << "/" << seqNo);
 
 	if (seqNo < m_maxNumPublish) {
 		m_scheduler.scheduleEvent(ndn::time::milliseconds(m_rangeUniformRandom(m_rng)),
@@ -164,7 +164,7 @@ void
 FSyncProducerApp::processSyncUpdate(const std::vector<psync::MissingDataInfo>& updates) {
 	for (const auto& update : updates) {
 		for (uint64_t i = update.lowSeq; i <= update.highSeq; i++) {
-			NDN_LOG_INFO("Update " << update.prefix << "/" << i);
+			NDN_LOG_INFO("PUpdate:" << update.prefix << "/" << i);
 		}
 	}
 }
