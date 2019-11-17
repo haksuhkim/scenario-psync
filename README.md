@@ -15,6 +15,8 @@ PSync Simulation
     
     NS_LOG=PSyncConsumerApp:psync.Consumer:PSyncProducerApp:psync.PartialProducer build/psync-rocketfuel --consumer="1,11,21,31,41" --producer="91" --sm=100 --ds=200 --duration=100 --p_start=1 --c_start=2 > p-sync-5.log 2>&1
 
+    NS_LOG=PSyncConsumerApp:psync.Consumer:PSyncProducerApp:psync.PartialProducer build/psync-rocketfuel-1 --config=psync.cfg --sm=50 --ds=100 --duration=200 --p_start=1 --c_start=2 > p-sync-1.log 2>&1
+
 
     Execution : Full PSync
 

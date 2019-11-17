@@ -33,7 +33,7 @@
 
 #include "ns3-dev/ns3/ndnSIM/utils/topology/rocketfuel-map-reader.hpp"
 
-#include "extensions/object-container.hpp"
+//#include "extensions/object-container.hpp"
 
 #include "extensions/utils.hpp"
 
@@ -46,19 +46,20 @@ std::string g_configure("psync.cfg");
 std::string g_producerIndexes("-#1");
 std::string g_consumerIndexes("-#1");
 
-std::map<string, std::vector<string>> g_consumerConfig;
-std::map<string, std::pair<string, string>> g_producerConfig;
+std::map<string, string> g_consumerConfig;
+std::map<string, string> g_producerConfig;
+//std::map<string, std::vector<string>> g_consumerConfig;
 //std::map<string, std::vector<string>> g_producerConfig;
 
-//uint64_t g_numberOfPublishMessages = std::numeric_limits<uint32_t>::max();
+uint64_t g_numberOfPublishMessages = std::numeric_limits<uint32_t>::max();
 uint32_t g_numberOfSubscribeMessages = 100;
 uint32_t g_numberOfDataStream = 200;
 int g_simulationTime = 300;
 int g_nInterestLifetime=4;
 int g_packetSize=100;
 
-string g_zPRandomize("uniform");
-double g_fPFrequency = 1.0;
+//string g_zPRandomize("uniform");
+//double g_fPFrequency = 1.0;
 
 string g_zCRandomize("uniform");
 double g_fCFrequency = 1.0;
@@ -222,7 +223,7 @@ int
 ReadConfig(std::string fileName) {
     ifstream topgen;
     topgen.open(fileName.c_str());
-    int count;
+    //int count;
 
     if (!topgen.is_open() || !topgen.good()) {
         NS_FATAL_ERROR("Cannot open file " << fileName << " for reading");
@@ -287,12 +288,8 @@ ReadConfig(std::string fileName) {
         }
 
         // extract prefix
-        std::vector<std::string> prefix;
-        prefix = trim(tokens[1];
-
-        // extract topic
-        std::vector<std::string> topic;
-        topic = trim(tokens[2];
+        std::string prefix;
+        prefix = trim(tokens[1]);
 #if 0
         std::vector<std::string> topics;
         for (uint32_t i = 1; i < tokens.size(); i++ ) {
@@ -314,7 +311,7 @@ ReadConfig(std::string fileName) {
         }
         // ??
         //g_producerConfig.insert(std::pair<string, std::vector<std::string>>(tokens[0], topics));
-        g_producerConfig.insert(std::pair<string, std::pair<string, string>>(tokens[0], (tokens[1], tokens[2])));
+        g_producerConfig.insert(std::pair<string, string>(tokens[0], prefix));
     }
 
     // consumer
@@ -334,6 +331,10 @@ ReadConfig(std::string fileName) {
     	    continue;
         }
 
+        // extract prefix
+        std::string prefix;
+        prefix = trim(tokens[1]);
+#if 0
         std::vector<std::string> topics;
         for (uint32_t i = 1; i < tokens.size(); i++ ) {
     	    string topic = trim(tokens[i]);
@@ -346,13 +347,15 @@ ReadConfig(std::string fileName) {
         if (topics.size() == 0) {
     	    continue;
         }
+#endif
 
         if (0 == g_consumerConfig.size()) {
     	    g_consumerIndexes = tokens[0];
         } else {
     	    g_consumerIndexes += ","+tokens[0];
         }
-        g_consumerConfig.insert(std::pair<string, std::vector<std::string>>(tokens[0], topics));
+        //g_consumerConfig.insert(std::pair<string, std::vector<std::string>>(tokens[0], topics));
+        g_consumerConfig.insert(std::pair<string, string>(tokens[0], prefix));
     }
 
     topgen.close();
@@ -373,11 +376,11 @@ parse_arguments(int argc, char *argv[]) {
 	cmd.AddValue ("ds", "Number of Data Stream", g_numberOfDataStream);
 	cmd.AddValue ("size", "Size of Packet", g_packetSize);
 	cmd.AddValue ("duration", "Duration of simulation", g_simulationTime);
-	cmd.AddValue ("lifetime", "lifetime of interest", g_nInterestLifetime);
-	cmd.AddValue ("p_random", "Type of send time randomization: none (default), uniform, exponential", g_zPRandomize);
-	cmd.AddValue ("c_random", "Type of send time randomization: none (default), uniform, exponential", g_zCRandomize);
-	cmd.AddValue ("p_freq", "Frequency of topic generation / interest packets", g_fPFrequency);
-	cmd.AddValue ("c_freq", "Frequency of topic generation / interest packets", g_fCFrequency);
+	//cmd.AddValue ("lifetime", "lifetime of interest", g_nInterestLifetime);
+	//cmd.AddValue ("p_random", "Type of send time randomization: none (default), uniform, exponential", g_zPRandomize);
+	//cmd.AddValue ("c_random", "Type of send time randomization: none (default), uniform, exponential", g_zCRandomize);
+	//cmd.AddValue ("p_freq", "Frequency of topic generation / interest packets", g_fPFrequency);
+	//cmd.AddValue ("c_freq", "Frequency of topic generation / interest packets", g_fCFrequency);
 	cmd.AddValue ("c_start", "consumer's start time", g_nCStart);
 	cmd.AddValue ("p_start", "producer's start time", g_nPStart);
 	cmd.AddValue ("r_start", "rendezvous's start time", g_nRStart);
@@ -399,11 +402,11 @@ parse_arguments(int argc, char *argv[]) {
 	NS_LOG_UNCOND("--ds            : " << g_numberOfDataStream);
 	NS_LOG_UNCOND("--size          : " << g_packetSize);
 	NS_LOG_UNCOND("--duration      : " << g_simulationTime);
-	NS_LOG_UNCOND("--lifetime      : " << g_nInterestLifetime);
-	NS_LOG_UNCOND("--p_random      : " << g_zPRandomize);
-	NS_LOG_UNCOND("--c_random      : " << g_zCRandomize);
-	NS_LOG_UNCOND("--p_freq        : " << g_fPFrequency);
-	NS_LOG_UNCOND("--c_freq        : " << g_fCFrequency);
+	//NS_LOG_UNCOND("--lifetime      : " << g_nInterestLifetime);
+	//NS_LOG_UNCOND("--p_random      : " << g_zPRandomize);
+	//NS_LOG_UNCOND("--c_random      : " << g_zCRandomize);
+	//NS_LOG_UNCOND("--p_freq        : " << g_fPFrequency);
+	//NS_LOG_UNCOND("--c_freq        : " << g_fCFrequency);
 	NS_LOG_UNCOND("--c_start       : " << g_nPStart);
 	NS_LOG_UNCOND("--p_start       : " << g_nCStart);
 	NS_LOG_UNCOND("--r_start       : " << g_nRStart);
@@ -480,11 +483,12 @@ main(int argc, char* argv[])
 	ndnHelper.InstallAll();
 
 	//std::string rnPrefix = "/RN";
-	std::string prodPrefix = "/prod-%05d";
+	//std::string prodPrefix = "/prod-%05d";
+    std::string prefix = "/prod";
 	std::string userPrefix = "topic";
 
 	// Choosing forwarding strategy
-	ndn::StrategyChoiceHelper::InstallAll(rnPrefix, "/localhost/nfd/strategy/best-route");
+	ndn::StrategyChoiceHelper::InstallAll(prefix, "/localhost/nfd/strategy/best-route");
 
 	// Installing global routing interface on all nodes
 	ndn::GlobalRoutingHelper ndnGlobalRoutingHelper;
@@ -530,7 +534,8 @@ main(int argc, char* argv[])
 	selectNodes(producerNodes, leafNode, g_producerIds, selectedProducer);
 	addToContainer(producerContainer, producerNodes, g_producerCount);
 
-	std::map<string, std::vector<string>>::iterator cfgIter;
+	//std::map<string, std::vector<string>>::iterator cfgIter;
+	std::map<string, string>::iterator cfgIter;
 	for (cfgIter = g_producerConfig.begin(); cfgIter != g_producerConfig.end(); cfgIter ++) {
 		int n = std::stoi(cfgIter->first);
 		Ptr<Node> nodePtr = leafNode[n];
@@ -601,7 +606,7 @@ main(int argc, char* argv[])
 
 	// Producer
 	ndn::AppHelper producerHelper("PSyncProducerApp");
-    producerHelper.SetPrefix(syncPrefix);
+    //producerHelper.SetPrefix(syncPrefix);
     producerHelper.SetAttribute("UserPrefix", StringValue(userPrefix));
     producerHelper.SetAttribute("MaxPublishMessage", UintegerValue(g_numberOfPublishMessages)); // max uint64
     producerHelper.SetAttribute("TotalDataStream", UintegerValue(g_numberOfDataStream));
@@ -621,29 +626,36 @@ main(int argc, char* argv[])
 	for (; producerIter != producerContainer.End(); producerIter++) {
 		uint32_t nodeId = (*producerIter)->GetId();
 		Ptr<Node> node = (*producerIter);
-		string nodePrefix = stringf("prod-%05d", nodeId);
-		producerHelper.SetAttribute("NodePrefix", StringValue(nodePrefix));
+        string nodePrefix;
+		//string nodePrefix = stringf("prod-%05d", nodeId);
+		//producerHelper.SetAttribute("NodePrefix", StringValue(nodePrefix));
 
 		std::map<uint32_t, int>::iterator id2idxIter;
 		// 노드 ID로 입력된 Index를 찾고
 		id2idxIter = selectedProducer.find(nodeId);
 		if (id2idxIter != selectedProducer.end()) {
-			std::map<string, std::vector<string>>::iterator cfgIter;
+			//std::map<string, std::vector<string>>::iterator cfgIter;
+			std::map<string, string>::iterator cfgIter;
 
 			// producer 별 publish topic을 찾는다.
 			cfgIter = g_producerConfig.find(std::to_string(id2idxIter->second));
 			if (cfgIter != g_producerConfig.end()) {
+                nodePrefix = cfgIter->second;
+
+                producerHelper.SetPrefix(nodePrefix);
+#if 0
 				std::vector<string> topics = cfgIter->second;
 
 				ns3::Ptr<ObjectContainer> producerContainer = ns3::Create<ObjectContainer>();
 				producerContainer->set("PublishTopic", topics);
 
 				producerHelper.SetAttribute("CustomAttributes", ns3::PointerValue(producerContainer));
+#endif
 			}
 		}
 
 		// add routing prefix
-		ndnGlobalRoutingHelper.AddOrigin(prodPrefix, node);
+		ndnGlobalRoutingHelper.AddOrigin(nodePrefix, node);
 
 		ApplicationContainer container = producerHelper.Install(*producerIter);
 		container.Start(Seconds(g_nPStart));
@@ -651,13 +663,13 @@ main(int argc, char* argv[])
 	}
 
 	// Consumer
-	ndn::AppHelper consumerHelper("ConsumerDrn");
-	consumerHelper.SetAttribute("RnPrefix", StringValue(rnPrefix));
+	ndn::AppHelper consumerHelper("PSyncConsumerApp");
 	consumerHelper.SetAttribute("NumSubscribeMessage", UintegerValue(g_numberOfSubscribeMessages)); // 100 subs
-	consumerHelper.SetAttribute("TotalDataStream", UintegerValue(g_numberOfDataStream)); // 200 DS
-	consumerHelper.SetAttribute("Randomize", StringValue(g_zCRandomize));
-	consumerHelper.SetAttribute("Frequency", DoubleValue(g_fCFrequency));
-	consumerHelper.SetAttribute("LifeTime", TimeValue(Seconds(g_nInterestLifetime)));
+	//consumerHelper.SetAttribute("RnPrefix", StringValue(rnPrefix));
+	//consumerHelper.SetAttribute("TotalDataStream", UintegerValue(g_numberOfDataStream)); // 200 DS
+	//consumerHelper.SetAttribute("Randomize", StringValue(g_zCRandomize));
+	//consumerHelper.SetAttribute("Frequency", DoubleValue(g_fCFrequency));
+	//consumerHelper.SetAttribute("LifeTime", TimeValue(Seconds(g_nInterestLifetime)));
 	//consumerHelper.Install(nodes.Get(0)).Start(Seconds(10.0));
 
 	//consumerApp.Install(consumerContainer).Start(Seconds(8));
@@ -669,17 +681,22 @@ main(int argc, char* argv[])
 		// 노드 ID로 입력된 Index를 찾고
 		id2idxIter = selectedConsumer.find(nodeId);
 		if (id2idxIter != selectedConsumer.end()) {
-			std::map<string, std::vector<string>>::iterator cfgIter;
+			std::map<string, string>::iterator cfgIter;
 
 			// consumer 별 subscribe topic을 찾는다.
 			cfgIter = g_consumerConfig.find(std::to_string(id2idxIter->second));
 			if (cfgIter != g_consumerConfig.end()) {
+                string nodePrefix = cfgIter->second;
+
+                consumerHelper.SetPrefix(nodePrefix);
+#if 0
 				std::vector<string> topics = cfgIter->second;
 
 				ns3::Ptr<ObjectContainer> consumerContainer = ns3::Create<ObjectContainer>();
 				consumerContainer->set("SubscribeTopic", topics);
 
 				consumerHelper.SetAttribute("CustomAttributes", ns3::PointerValue(consumerContainer));
+#endif
 			}
 		}
 
@@ -689,6 +706,7 @@ main(int argc, char* argv[])
 		container.Stop(Seconds(g_simulationTime-2.0));
 	}
 
+#if 0
 	rendezvousIter = rendezvousContainer.Begin();
 	for (; rendezvousIter != rendezvousContainer.End(); rendezvousIter++) {
 		Ptr<Node> node = (*rendezvousIter);
@@ -699,6 +717,7 @@ main(int argc, char* argv[])
 
 	// Add /RN origins to ndn::GlobalRouter
 	ndnGlobalRoutingHelper.AddOrigins(rnPrefix, rendezvousContainer);
+#endif
 
 	// Calculate and install FIBs
 	ndn::GlobalRoutingHelper::CalculateRoutes();
