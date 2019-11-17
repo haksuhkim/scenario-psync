@@ -47,7 +47,8 @@ std::string g_producerIndexes("-#1");
 std::string g_consumerIndexes("-#1");
 
 std::map<string, std::vector<string>> g_consumerConfig;
-std::map<string, std::vector<string>> g_producerConfig;
+std::map<string, std::pair<string, string>> g_producerConfig;
+//std::map<string, std::vector<string>> g_producerConfig;
 
 //uint64_t g_numberOfPublishMessages = std::numeric_limits<uint32_t>::max();
 uint32_t g_numberOfSubscribeMessages = 100;
@@ -285,6 +286,14 @@ ReadConfig(std::string fileName) {
     	    continue;
         }
 
+        // extract prefix
+        std::vector<std::string> prefix;
+        prefix = trim(tokens[1];
+
+        // extract topic
+        std::vector<std::string> topic;
+        topic = trim(tokens[2];
+#if 0
         std::vector<std::string> topics;
         for (uint32_t i = 1; i < tokens.size(); i++ ) {
     	    string topic = trim(tokens[i]);
@@ -297,13 +306,15 @@ ReadConfig(std::string fileName) {
         if(topics.size() == 0) {
     	    continue;
         }
-
+#endif
         if (0 == g_producerConfig.size()) {
     	    g_producerIndexes = tokens[0];
         } else {
     	    g_producerIndexes += ","+tokens[0];
         }
-        g_producerConfig.insert(std::pair<string, std::vector<std::string>>(tokens[0], topics));
+        // ??
+        //g_producerConfig.insert(std::pair<string, std::vector<std::string>>(tokens[0], topics));
+        g_producerConfig.insert(std::pair<string, std::pair<string, string>>(tokens[0], (tokens[1], tokens[2])));
     }
 
     // consumer
