@@ -61,8 +61,8 @@ int g_packetSize=100;
 //string g_zPRandomize("uniform");
 //double g_fPFrequency = 1.0;
 
-string g_zCRandomize("uniform");
-double g_fCFrequency = 1.0;
+//string g_zCRandomize("uniform");
+//double g_fCFrequency = 1.0;
 
 double g_nRStart = 3.0;
 double g_nPStart = 5.0;
@@ -607,7 +607,7 @@ main(int argc, char* argv[])
 	// Producer
 	ndn::AppHelper producerHelper("PSyncProducerApp");
     //producerHelper.SetPrefix(syncPrefix);
-    producerHelper.SetAttribute("UserPrefix", StringValue(userPrefix));
+    //producerHelper.SetAttribute("UserPrefix", StringValue(userPrefix));
     producerHelper.SetAttribute("MaxPublishMessage", UintegerValue(g_numberOfPublishMessages)); // max uint64
     producerHelper.SetAttribute("TotalDataStream", UintegerValue(g_numberOfDataStream));
 
@@ -627,7 +627,7 @@ main(int argc, char* argv[])
 		uint32_t nodeId = (*producerIter)->GetId();
 		Ptr<Node> node = (*producerIter);
         string nodePrefix;
-		//string nodePrefix = stringf("prod-%05d", nodeId);
+		string uPrefix = stringf("t-%03d", nodeId);
 		//producerHelper.SetAttribute("NodePrefix", StringValue(nodePrefix));
 
 		std::map<uint32_t, int>::iterator id2idxIter;
@@ -643,6 +643,7 @@ main(int argc, char* argv[])
                 nodePrefix = cfgIter->second;
 
                 producerHelper.SetPrefix(nodePrefix);
+                producerHelper.SetAttribute("UserPrefix", StringValue(uPrefix));
 #if 0
 				std::vector<string> topics = cfgIter->second;
 
