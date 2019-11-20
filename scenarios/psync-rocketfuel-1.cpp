@@ -45,6 +45,7 @@ std::string g_configure("psync.cfg");
 //std::string g_rendezvousIndexes("-#1");
 std::string g_producerIndexes("-#1");
 std::string g_consumerIndexes("-#1");
+std::string g_topicName("topic");
 
 std::map<string, string> g_consumerConfig;
 std::map<string, string> g_producerConfig;
@@ -369,6 +370,7 @@ parse_arguments(int argc, char *argv[]) {
 	CommandLine cmd;
 	cmd.AddValue ("topology", "topology file path", g_topology);
 	cmd.AddValue ("config", "configure file(default: drnf.cfg", g_configure);
+	cmd.AddValue ("topic", "topic name(default: topic", g_topicName);
     //cmd.AddValue ("rendezvous", "rendezvous nodes(indexes of router node)", g_rendezvousIndexes);
     //cmd.AddValue ("producer", "producer nodes(indexes of leaf node)", g_producerIndexes);
     //cmd.AddValue ("consumer", "consumer nodes(indexes of leaf node)", g_consumerIndexes);
@@ -395,6 +397,7 @@ parse_arguments(int argc, char *argv[]) {
 
 	NS_LOG_UNCOND("program arguments:");
 	NS_LOG_UNCOND("--topology      : " << g_topology);
+	NS_LOG_UNCOND("--topic         : " << g_topicName);
     //NS_LOG_UNCOND("--rendezvous    : " << g_rendezvousIndexes);
     //NS_LOG_UNCOND("--producer      : " << g_producerIndexes);
     //NS_LOG_UNCOND("--consumer      : " << g_consumerIndexes);
@@ -627,7 +630,8 @@ main(int argc, char* argv[])
 		uint32_t nodeId = (*producerIter)->GetId();
 		Ptr<Node> node = (*producerIter);
         string nodePrefix;
-		string uPrefix = stringf("t-%03d", nodeId);
+		string uPrefix(g_topicName);
+		uPrefix.append(stringf("-%03d", nodeId));
 		//producerHelper.SetAttribute("NodePrefix", StringValue(nodePrefix));
 
 		std::map<uint32_t, int>::iterator id2idxIter;
