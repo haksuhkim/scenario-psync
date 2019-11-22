@@ -635,13 +635,13 @@ main(int argc, char* argv[])
 		//producerHelper.SetAttribute("NodePrefix", StringValue(nodePrefix));
 
 		std::map<uint32_t, int>::iterator id2idxIter;
-		// 노드 ID로 입력된 Index를 찾고
+		// find index with nodeid
 		id2idxIter = selectedProducer.find(nodeId);
 		if (id2idxIter != selectedProducer.end()) {
 			//std::map<string, std::vector<string>>::iterator cfgIter;
 			std::map<string, string>::iterator cfgIter;
 
-			// producer 별 publish topic을 찾는다.
+			// assign prefix and topic per producer
 			cfgIter = g_producerConfig.find(std::to_string(id2idxIter->second));
 			if (cfgIter != g_producerConfig.end()) {
                 nodePrefix = cfgIter->second;
@@ -683,12 +683,12 @@ main(int argc, char* argv[])
 		uint32_t nodeId = (*consumerIter)->GetId();
 
 		std::map<uint32_t, int>::iterator id2idxIter;
-		// 노드 ID로 입력된 Index를 찾고
+		// find index with nodeid
 		id2idxIter = selectedConsumer.find(nodeId);
 		if (id2idxIter != selectedConsumer.end()) {
 			std::map<string, string>::iterator cfgIter;
 
-			// consumer 별 subscribe topic을 찾는다.
+            // assign producer prefix
 			cfgIter = g_consumerConfig.find(std::to_string(id2idxIter->second));
 			if (cfgIter != g_consumerConfig.end()) {
                 string nodePrefix = cfgIter->second;
